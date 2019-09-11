@@ -1,0 +1,14 @@
+{
+    "name": "tolkam/rules",
+    "description": "Validates input data against predefined rules",
+    "type": "library",
+    "license": "proprietary",
+    "autoload": {
+        "psr-4": {
+            "Tolkam\\Rules\\": "src/"
+        }
+    },
+    "require": {
+        "php": ">=7.2"
+    }
+}
