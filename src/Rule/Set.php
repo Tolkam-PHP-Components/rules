@@ -2,7 +2,6 @@
 
 namespace Tolkam\Rules\Rule;
 
-use RuntimeException;
 use InvalidArgumentException;
 use Tolkam\Rules\Rule;
 use Tolkam\Rules\RuleFailures;
@@ -46,7 +45,7 @@ class Set extends Rule
     {
         $failures = new RuleFailures();
         foreach ($this->rules as $k => $rule) {
-            $v = $value[$k] ?? null;
+            $v = is_array($value) ? ($value[$k] ?? null) : $value;
             do {
                 if ($result = $rule->apply($v)) {
                     $failures[$k] = $result;
@@ -68,7 +67,7 @@ class Set extends Rule
     protected function add(string $key, RuleInterface $rule)
     {
         if(isset($this->rules[$key])) {
-            throw new InvalidArgumentException(sprintf('Rule with key "%s" is aready exists in set', $key));
+            throw new InvalidArgumentException(sprintf('Rule with key "%s" is already exists in set', $key));
         }
         
         $this->rules[$key] = $rule;

@@ -6,6 +6,7 @@ interface RuleFailureInterface
 {
     /**
      * Sets key
+     *
      * @param string $key
      *
      * @return RuleFailureInterface
