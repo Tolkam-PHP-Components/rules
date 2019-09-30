@@ -12,18 +12,31 @@ class Sequence extends Rule
 {
     /**
      * rules
+     *
      * @var RuleInterface
      */
     protected $rules = [];
-
+    
     /**
      * @param RuleInterface[] $rules
      */
     public function __construct(RuleInterface ...$rules)
     {
-        $this->rules = $rules;
+        if (!empty($rules)) {
+            $this->rules = $rules;
+        }
     }
-
+    
+    /**
+     * Adds to sequence
+     *
+     * @param RuleInterface $rule
+     */
+    public function add(RuleInterface $rule)
+    {
+        $this->rules[] = $rule;
+    }
+    
     /**
      * @inheritDoc
      */
