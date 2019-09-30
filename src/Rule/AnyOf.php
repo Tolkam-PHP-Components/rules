@@ -13,7 +13,7 @@ class AnyOf extends Rule
     protected $rules;
     
     /**
-     * @param RuleInterface ...$rules
+     * @param RuleInterface[] $rules
      */
     public function __construct(RuleInterface ...$rules)
     {

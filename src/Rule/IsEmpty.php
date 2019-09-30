@@ -12,7 +12,7 @@ class IsEmpty extends Rule
     public function apply($value)
     {
         if (!empty($value)) {
-            return $this->failure('value.empty.invalid', 'Value must be empty');
+            return $this->failure('isEmpty', 'Value must be empty');
         }
         
         return null;

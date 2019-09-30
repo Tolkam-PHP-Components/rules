@@ -5,6 +5,9 @@ namespace Tolkam\Rules\Rule;
 use Tolkam\Rules\Rule;
 use Tolkam\Rules\RuleInterface;
 
+/**
+ * Sequence of rules, stops on first failure
+ */
 class Sequence extends Rule
 {
     /**

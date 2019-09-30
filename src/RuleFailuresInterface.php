@@ -10,4 +10,11 @@ interface RuleFailuresInterface extends \ArrayAccess, \Countable, \Iterator
      * @return self
      */
     public function flatten(): self;
+    
+    /**
+     * Gets array representation
+     *
+     * @return array
+     */
+    public function toArray(): array;
 }

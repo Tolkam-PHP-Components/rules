@@ -48,8 +48,8 @@ class Type extends OptionsAwareRule
         } elseif ($value instanceof $type) {
             return null;
         }
-
-        return $this->failure('value.type.invalid', sprintf(
+    
+        return $this->failure('type.invalid', sprintf(
             'Value should be of type %s, %s given',
             $type,
             gettype($value)

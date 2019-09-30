@@ -15,7 +15,7 @@ class Email extends Rule
             || ! mb_check_encoding($value, 'ASCII')
             || ! filter_var($value, FILTER_VALIDATE_EMAIL)
         ) {
-            return $this->failure('email.invalid', 'Invalid email');
+            return $this->failure('invalid', 'Invalid email');
         }
         
         return null;

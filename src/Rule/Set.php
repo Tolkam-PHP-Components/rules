@@ -7,6 +7,11 @@ use Tolkam\Rules\Rule;
 use Tolkam\Rules\RuleFailures;
 use Tolkam\Rules\RuleInterface;
 
+/**
+ * Set of other rules
+ *
+ * @deprecated
+ */
 class Set extends Rule
 {
     /**
@@ -19,6 +24,12 @@ class Set extends Rule
      */
     public function __construct(array $definition)
     {
+        // trigger_error(sprintf(
+        //     'Method %s is deprecated. Use %s instead',
+        //     __METHOD__,
+        //     Rules::class
+        // ), E_USER_DEPRECATED);
+    
         $this->extend($definition);
     }
     
@@ -44,6 +55,7 @@ class Set extends Rule
     public function apply($value)
     {
         $failures = new RuleFailures();
+    
         foreach ($this->rules as $k => $rule) {
             $v = is_array($value) ? ($value[$k] ?? null) : $value;
             do {
@@ -53,6 +65,7 @@ class Set extends Rule
                 }
             } while ($rule = $rule->next());
         }
+    
         return count($failures) ? $failures : null;
     }
     

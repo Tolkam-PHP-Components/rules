@@ -5,37 +5,44 @@ namespace Tolkam\Rules;
 interface RuleFailureInterface
 {
     /**
-     * Sets key
+     * Sets failure id
      *
-     * @param string $key
-     *
-     * @return RuleFailureInterface
-     */
-    public function setKey(string $key);
-    
-    /**
-     * Sets message
-     *
-     * @param string $message
+     * @param string $id
      *
      * @return RuleFailureInterface
      */
-    public function setMessage(string $message);
+    public function setId(string $id);
     
     /**
-     * Gets key
+     * Sets failure text
+     *
+     * @param string $text
+     *
+     * @return RuleFailureInterface
+     */
+    public function setText(string $text);
+    
+    /**
+     * Gets id
      *
      * @return string
      */
-    public function getKey(): string;
-
+    public function getId(): string;
+    
     /**
      * Gets message
      *
      * @return string
      */
-    public function getMessage(): string;
-
+    public function getText(): string;
+    
+    /**
+     * Gets array representation
+     *
+     * @return array
+     */
+    public function toArray(): array;
+    
     /**
      * Gets string representation
      *

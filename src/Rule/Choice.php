@@ -26,7 +26,7 @@ class Choice extends Rule
     public function apply($value)
     {
         if (!in_array($value, $this->values, true)) {
-            return $this->failure('value.choice.invalid', 'Value must be one of allowed choices');
+            return $this->failure('invalid', 'Value must be one of allowed choices');
         }
         
         return null;

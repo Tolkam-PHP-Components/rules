@@ -21,6 +21,24 @@ class RuleFailures implements RuleFailuresInterface
             $this->add($k, $v);
         }
     }
+    
+    /**
+     * @inheritDoc
+     */
+    public function toArray(): array
+    {
+        $arr = [];
+        
+        foreach ($this->items as $k => $v) {
+            if ($v instanceof RuleFailuresInterface || $v instanceof RuleFailureInterface) {
+                $arr[$k] = $v->toArray();
+            } else {
+                $arr[$k] = $v;
+            }
+        }
+        
+        return $arr;
+    }
 
     /**
      * @inheritDoc

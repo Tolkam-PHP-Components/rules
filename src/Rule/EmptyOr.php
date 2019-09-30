@@ -8,35 +8,18 @@ use Tolkam\Rules\RuleInterface;
 class EmptyOr extends Rule
 {
     /**
-     * next rule
-     * @var RuleInterface
+     * @param RuleInterface $nextRule
      */
-    protected $nextRule;
-
-    /**
-     * @param RuleInterface|null $nextRule
-     */
-    public function __construct(RuleInterface $nextRule = null)
+    public function __construct(RuleInterface $nextRule)
     {
-        $this->nextRule = $nextRule;
+        $this->setNextRule($nextRule);
     }
-
+    
     /**
      * @inheritDoc
      */
     public function apply($value)
     {
-        if (empty($value)) {
-            $this->nextRule = null;
-            return;
-        }
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function next(): ?RuleInterface
-    {
-        return $this->nextRule;
+        return !empty($value) ? $this->next()->apply($value) : null;
     }
 }

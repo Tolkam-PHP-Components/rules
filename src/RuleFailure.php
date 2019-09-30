@@ -7,36 +7,39 @@ use RuntimeException;
 class RuleFailure implements RuleFailureInterface
 {
     /**
-     * failure key
+     * Failure id
+     *
      * @var string
      */
-    protected $key;
-
+    protected $id;
+    
     /**
-     * failure message
+     * Failure text
+     *
      * @var string
      */
-    protected $message;
-
+    protected $text;
+    
     /**
-     * @param string      $key
-     * @param string|null $message
+     * @param string      $id
+     * @param string|null $text
      */
-    public function __construct(string $key, string $message = null)
+    public function __construct(string $id, string $text = null)
     {
         $allowed = 'a-zA-Z0-9:\.';
-        if (preg_match('~[^' . $allowed . ']~', $key)) {
+        if (preg_match('~[^' . $allowed . ']~', $id)) {
             throw new RuntimeException(
-                sprintf('Key allowed characters are "%s"', $allowed)
+                sprintf('Invalid failure id: allowed characters are "%s"', $allowed)
             );
         }
-
-        $this->key = $key;
-        $this->message = $message;
+        
+        $this->id = $id;
+        $this->text = $text;
     }
-
+    
     /**
-     * @param  string $prop
+     * @param string $prop
+     *
      * @return mixed
      */
     public function __get(string $prop)
@@ -52,40 +55,51 @@ class RuleFailure implements RuleFailureInterface
     /**
      * @inheritDoc
      */
+    public function toArray(): array
+    {
+        return [
+            'id' => $this->getId(),
+            'text' => $this->getText(),
+        ];
+    }
+    
+    /**
+     * @inheritDoc
+     */
     public function __toString(): string
     {
-        return $this->message;
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function getKey(): string
-    {
-        return $this->key;
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function getMessage(): string
-    {
-        return $this->message;
+        return $this->text;
     }
     
     /**
      * @inheritDoc
      */
-    public function setKey(string $key)
+    public function getId(): string
     {
-        return new static($key, $this->getMessage());
+        return $this->id;
     }
     
     /**
      * @inheritDoc
      */
-    public function setMessage(string $message)
+    public function getText(): string
     {
-        return new static($this->getKey(), $message);
+        return $this->text;
+    }
+    
+    /**
+     * @inheritDoc
+     */
+    public function setId(string $id)
+    {
+        return new static($id, $this->getText());
+    }
+    
+    /**
+     * @inheritDoc
+     */
+    public function setText(string $text)
+    {
+        return new static($this->getId(), $text);
     }
 }
