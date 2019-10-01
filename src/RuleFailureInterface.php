@@ -5,13 +5,13 @@ namespace Tolkam\Rules;
 interface RuleFailureInterface
 {
     /**
-     * Sets failure id
+     * Sets failure code
      *
-     * @param string $id
+     * @param string $code
      *
      * @return RuleFailureInterface
      */
-    public function setId(string $id);
+    public function setCode(string $code);
     
     /**
      * Sets failure text
@@ -23,11 +23,11 @@ interface RuleFailureInterface
     public function setText(string $text);
     
     /**
-     * Gets id
+     * Gets code
      *
      * @return string
      */
-    public function getId(): string;
+    public function getCode(): string;
     
     /**
      * Gets message

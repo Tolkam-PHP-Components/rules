@@ -7,11 +7,11 @@ use RuntimeException;
 class RuleFailure implements RuleFailureInterface
 {
     /**
-     * Failure id
+     * Failure code
      *
      * @var string
      */
-    protected $id;
+    protected $code;
     
     /**
      * Failure text
@@ -21,19 +21,19 @@ class RuleFailure implements RuleFailureInterface
     protected $text;
     
     /**
-     * @param string      $id
+     * @param string      $code
      * @param string|null $text
      */
-    public function __construct(string $id, string $text = null)
+    public function __construct(string $code, string $text = null)
     {
         $allowed = 'a-zA-Z0-9:\.';
-        if (preg_match('~[^' . $allowed . ']~', $id)) {
+        if (preg_match('~[^' . $allowed . ']~', $code)) {
             throw new RuntimeException(
-                sprintf('Invalid failure id: allowed characters are "%s"', $allowed)
+                sprintf('Invalid failure code: allowed characters are "%s"', $allowed)
             );
         }
         
-        $this->id = $id;
+        $this->code = $code;
         $this->text = $text;
     }
     
@@ -58,7 +58,7 @@ class RuleFailure implements RuleFailureInterface
     public function toArray(): array
     {
         return [
-            'id' => $this->getId(),
+            'code' => $this->getCode(),
             'text' => $this->getText(),
         ];
     }
@@ -74,9 +74,9 @@ class RuleFailure implements RuleFailureInterface
     /**
      * @inheritDoc
      */
-    public function getId(): string
+    public function getCode(): string
     {
-        return $this->id;
+        return $this->code;
     }
     
     /**
@@ -90,9 +90,9 @@ class RuleFailure implements RuleFailureInterface
     /**
      * @inheritDoc
      */
-    public function setId(string $id)
+    public function setCode(string $code)
     {
-        return new static($id, $this->getText());
+        return new static($code, $this->getText());
     }
     
     /**
@@ -100,6 +100,6 @@ class RuleFailure implements RuleFailureInterface
      */
     public function setText(string $text)
     {
-        return new static($this->getId(), $text);
+        return new static($this->getCode(), $text);
     }
 }
