@@ -2,45 +2,35 @@
 
 namespace Tolkam\Rules\Rule;
 
-use Tolkam\Rules\OptionsAwareRule;
+use Tolkam\Rules\Rule;
 
-class Type extends OptionsAwareRule
+class Type extends Rule
 {
     /**
-     * @inheritDoc
+     * @var string
      */
-    public function getDefaultOption(): string
-    {
-        return 'type';
-    }
-
+    protected $type;
+    
     /**
-     * @inheritDoc
+     * @param string $type
      */
-    public function getKnownOptions(): array
+    public function __construct(string $type)
     {
-        return ['type'];
+        $this->type = $type;
     }
-
-    /**
-     * @inheritDoc
-     */
-    public function getRequiredOptions(): array
-    {
-        return ['type'];
-    }
-
+    
     /**
      * @inheritDoc
      */
     public function apply($value)
     {
-        $type = $this->options['type'];
+        $type = $this->type;
         
-        $type = 'boolean' == $type ? 'bool' : $type;
+        $type = $type === 'boolean' ? 'bool' : $type;
+        
         $isFunction = 'is_' . mb_strtolower($type);
         $cTypeFunction = 'ctype_' . mb_strtolower($type);
-
+        
         if (function_exists($isFunction) && $isFunction($value)) {
             return null;
         } elseif (function_exists($cTypeFunction) && $cTypeFunction($value)) {
@@ -48,7 +38,7 @@ class Type extends OptionsAwareRule
         } elseif ($value instanceof $type) {
             return null;
         }
-    
+        
         return $this->failure('type.invalid', sprintf(
             'Value should be of type %s, %s given',
             $type,

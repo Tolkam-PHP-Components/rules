@@ -12,11 +12,10 @@ use Tolkam\Rules\RuleInterface;
 class ArrayOf extends Rule
 {
     /**
-     * rule
      * @var RuleInterface
      */
     protected $rule;
-
+    
     /**
      * @param RuleInterface $rule
      */
@@ -24,7 +23,7 @@ class ArrayOf extends Rule
     {
         $this->rule = $rule;
     }
-
+    
     /**
      * @inheritDoc
      */
@@ -34,13 +33,15 @@ class ArrayOf extends Rule
         if ($failure = (new Type('array'))->apply($value)) {
             return $failure;
         }
-
+        
         $failures = new RuleFailures();
+        
         foreach ($value as $k => $v) {
             if ($failure = $this->rule->apply($v)) {
                 $failures[$k] = $failure;
             }
         }
-        return count($failures) ? $failures : null;
+        
+        return $failures->count() ? $failures : null;
     }
 }
