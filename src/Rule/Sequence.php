@@ -11,8 +11,6 @@ use Tolkam\Rules\RuleInterface;
 class Sequence extends Rule
 {
     /**
-     * rules
-     *
      * @var RuleInterface
      */
     protected $rules = [];

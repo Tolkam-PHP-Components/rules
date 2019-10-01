@@ -3,15 +3,17 @@
 namespace Tolkam\Rules;
 
 use RuntimeException;
+use Tolkam\Rules\FlattenStrategy\DefaultFlattenStrategy;
 
 class RuleFailures implements RuleFailuresInterface
 {
     /**
      * items
+     *
      * @var array
      */
     protected $items = [];
-
+    
     /**
      * @param iterable $items
      */
@@ -39,43 +41,24 @@ class RuleFailures implements RuleFailuresInterface
         
         return $arr;
     }
-
+    
     /**
      * @inheritDoc
      */
-    public function flatten(): RuleFailuresInterface
+    public function flatten(FlattenStrategyInterface $strategy = null): RuleFailuresInterface
     {
-        return $this->doFlatten($this, new self);
-    }
-
-    /**
-     * Flattens source to one-dimension
-     *
-     * @param  iterable                 $source
-     * @param  RuleFailuresInterface    $target
-     * @param  string|null $startPath
-     * @return RuleFailuresInterface
-     */
-    protected function doFlatten(iterable $source,
-        RuleFailuresInterface $target, string $startPath = ''): RuleFailuresInterface
-    {
-        foreach ($source as $k => $v) {
-            $path = $startPath !== '' ? $startPath . '.' . $k : $k;
-            if ($v instanceof RuleFailuresInterface) {
-                $target = $this->doFlatten($v, $target, $path);
-            } else {
-                $target[$path] = $v;
-            }
+        if (!$strategy) {
+            $strategy = new DefaultFlattenStrategy();
         }
-
-        return $target;
+        
+        return $strategy->apply($this);
     }
-
+    
     /**
      * Adds item
      *
-     * @param mixed  $offset
-     * @param mixed  $value
+     * @param mixed $offset
+     * @param mixed $value
      */
     public function add($offset, $value)
     {
@@ -88,14 +71,14 @@ class RuleFailures implements RuleFailuresInterface
                 gettype($value)
             ));
         }
-
+        
         if (is_null($offset)) {
             $this->items[] = $value;
         } else {
             $this->items[$offset] = $value;
         }
     }
-
+    
     /**
      * @inheritDoc
      */
@@ -103,7 +86,7 @@ class RuleFailures implements RuleFailuresInterface
     {
         return count($this->items);
     }
-
+    
     /**
      * @inheritDoc
      */
@@ -111,7 +94,7 @@ class RuleFailures implements RuleFailuresInterface
     {
         return reset($this->items);
     }
-
+    
     /**
      * @inheritDoc
      */
@@ -119,7 +102,7 @@ class RuleFailures implements RuleFailuresInterface
     {
         return current($this->items);
     }
-
+    
     /**
      * @inheritDoc
      */
@@ -127,7 +110,7 @@ class RuleFailures implements RuleFailuresInterface
     {
         return key($this->items);
     }
-
+    
     /**
      * @inheritDoc
      */
@@ -135,7 +118,7 @@ class RuleFailures implements RuleFailuresInterface
     {
         return next($this->items);
     }
-
+    
     /**
      * @inheritDoc
      */
@@ -143,7 +126,7 @@ class RuleFailures implements RuleFailuresInterface
     {
         return key($this->items) !== null;
     }
-
+    
     /**
      * @inheritDoc
      */
@@ -151,7 +134,7 @@ class RuleFailures implements RuleFailuresInterface
     {
         $this->add($offset, $value);
     }
-
+    
     /**
      * @inheritDoc
      */
@@ -159,7 +142,7 @@ class RuleFailures implements RuleFailuresInterface
     {
         return isset($this->items[$offset]);
     }
-
+    
     /**
      * @inheritDoc
      */
@@ -167,7 +150,7 @@ class RuleFailures implements RuleFailuresInterface
     {
         unset($this->items[$offset]);
     }
-
+    
     /**
      * @inheritDoc
      */

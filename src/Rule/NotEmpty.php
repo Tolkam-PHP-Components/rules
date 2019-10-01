@@ -8,11 +8,16 @@ use Tolkam\Rules\RuleInterface;
 class NotEmpty extends Rule
 {
     /**
+     * @var RuleInterface|null
+     */
+    protected $nextRule;
+    
+    /**
      * @param RuleInterface|null $nextRule
      */
     public function __construct(RuleInterface $nextRule = null)
     {
-        $this->setNextRule($nextRule);
+        $this->nextRule = $nextRule;
     }
     
     /**
@@ -24,10 +29,8 @@ class NotEmpty extends Rule
             return $this->failure('notEmpty', 'Value must not be empty');
         }
         
-        if ($next = $this->next()) {
-            return $next->apply($value);
-        }
-        
-        return null;
+        return $this->nextRule
+            ? $this->nextRule->apply($value)
+            : $this->nextRule;
     }
 }

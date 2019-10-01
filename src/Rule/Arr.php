@@ -1,13 +1,59 @@
 <?php
 
-namespace Tolkam\Rules;
+namespace Tolkam\Rules\Rule;
 
 use InvalidArgumentException;
+use Tolkam\Rules\Rule;
+use Tolkam\Rules\RuleFailures;
+use Tolkam\Rules\RuleInterface;
 
 /**
- * Set of other rules
+ * <code>
+ * $input = [
+ * 'a' => [
+ * 'aa' => 'new \DateTime',
+ * 'ab' => 500,
+ * ],
+ * 'b' => null,
+ * 'c' => [
+ * [
+ * 'hash' => false
+ * ],
+ * [
+ * 'hash' => null
+ * ]
+ * ]
+ * ];
+ *
+ * $rulesArr = [
+ * 'a' => new Rule\Arr([
+ * 'aa' => new Rule\Type(\DateTime::class),
+ * 'ab' => new Rule\NotEmpty(new Rule\Type('integer')),
+ * 'ac' => new Rule\Arr([
+ * 'aca' => new Rule\Type('array'),
+ * ])
+ * ]),
+ * 'b' => new Rule\Sequence(
+ * new Rule\NotEmpty,
+ * new Rule\Choice(['x', 'y', 'z'])
+ * ),
+ * 'c' => new Rule\ArrayOf(
+ * new Rule\Arr([
+ * 'hash' => new Rule\Type('string'),
+ * 'ip' => new Rule\Type('string')
+ * ])
+ * ),
+ * 'd' => new Rule\NotEmpty
+ * ];
+ *
+ * $rules = new Rule\Arr($rulesArr);
+ * $result = $rules
+ * ->apply($input)
+ * ->flatten(new NamespacedCodesStrategy)
+ * ->toArray();
+ * </code>
  */
-class Rules extends Rule
+class Arr extends Rule
 {
     /**
      * @var RuleInterface[]

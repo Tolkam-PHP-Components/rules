@@ -7,11 +7,10 @@ use Tolkam\Rules\Rule;
 class Choice extends Rule
 {
     /**
-     * values
      * @var array
      */
     protected $values = [];
-
+    
     /**
      * @param array $values
      */
@@ -19,7 +18,7 @@ class Choice extends Rule
     {
         $this->values = $values;
     }
-
+    
     /**
      * @inheritDoc
      */
