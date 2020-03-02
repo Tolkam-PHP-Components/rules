@@ -11,7 +11,7 @@ interface RuleFailureInterface
      *
      * @return RuleFailureInterface
      */
-    public function setCode(string $code);
+    public function withCode(string $code);
     
     /**
      * Sets failure text
@@ -20,7 +20,7 @@ interface RuleFailureInterface
      *
      * @return RuleFailureInterface
      */
-    public function setText(string $text);
+    public function withText(string $text);
     
     /**
      * Gets code

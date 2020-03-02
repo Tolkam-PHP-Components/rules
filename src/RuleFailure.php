@@ -4,6 +4,10 @@ namespace Tolkam\Rules;
 
 use RuntimeException;
 
+/**
+ * @property string $code
+ * @property string $text
+ */
 class RuleFailure implements RuleFailureInterface
 {
     /**
@@ -11,14 +15,14 @@ class RuleFailure implements RuleFailureInterface
      *
      * @var string
      */
-    protected $code;
+    protected string $code;
     
     /**
      * Failure text
      *
      * @var string
      */
-    protected $text;
+    protected string $text;
     
     /**
      * @param string      $code
@@ -90,7 +94,7 @@ class RuleFailure implements RuleFailureInterface
     /**
      * @inheritDoc
      */
-    public function setCode(string $code)
+    public function withCode(string $code)
     {
         return new static($code, $this->getText());
     }
@@ -98,7 +102,7 @@ class RuleFailure implements RuleFailureInterface
     /**
      * @inheritDoc
      */
-    public function setText(string $text)
+    public function withText(string $text)
     {
         return new static($this->getCode(), $text);
     }
