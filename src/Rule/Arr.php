@@ -3,8 +3,8 @@
 namespace Tolkam\Rules\Rule;
 
 use InvalidArgumentException;
+use Tolkam\Rules\Failures;
 use Tolkam\Rules\Rule;
-use Tolkam\Rules\RuleFailures;
 use Tolkam\Rules\RuleInterface;
 
 /**
@@ -58,7 +58,7 @@ class Arr extends Rule
     /**
      * @var RuleInterface[]
      */
-    protected $rules = [];
+    protected array $rules = [];
     
     /**
      * @param RuleInterface[] $rules
@@ -89,7 +89,7 @@ class Arr extends Rule
      */
     public function apply($value)
     {
-        $failures = new RuleFailures();
+        $failures = new Failures();
         
         foreach ($this->rules as $k => $rule) {
             $v = is_array($value) ? ($value[$k] ?? null) : $value;

@@ -6,8 +6,11 @@ use RuntimeException;
 
 abstract class OptionsAwareRule extends Rule
 {
-    protected $options = [];
-
+    /**
+     * @var array
+     */
+    protected array $options = [];
+    
     /**
      * @param mixed $options
      */
@@ -17,10 +20,10 @@ abstract class OptionsAwareRule extends Rule
         $defaultOption = $this->getDefaultOption();
         $knownOptions = $this->getKnownOptions();
         $requiredOptions = $this->getRequiredOptions();
-
+        
         $unknownOptions = [];
         $missingOptions = array_flip($requiredOptions);
-
+        
         // array
         if ($isArray) {
             if (is_string(key($options))) {
@@ -33,8 +36,7 @@ abstract class OptionsAwareRule extends Rule
                     }
                 }
             }
-
-        // value
+            // value
         } elseif ($options !== null) {
             if (empty($defaultOption)) {
                 throw new RuntimeException(sprintf(
@@ -42,7 +44,7 @@ abstract class OptionsAwareRule extends Rule
                     static::class
                 ));
             }
-
+            
             if (in_array($defaultOption, $requiredOptions)) {
                 unset($missingOptions[$defaultOption]);
             }
@@ -50,7 +52,7 @@ abstract class OptionsAwareRule extends Rule
                 $unknownOptions[] = $defaultOption;
             }
         }
-
+        
         if (!empty($unknownOptions)) {
             throw new RuntimeException(sprintf(
                 'Option(s) "%2$s" of %1$s is not in known list ("%3$s")',
@@ -59,7 +61,7 @@ abstract class OptionsAwareRule extends Rule
                 implode('", "', $knownOptions)
             ));
         }
-
+        
         if (!empty($missingOptions)) {
             throw new RuntimeException(sprintf(
                 'Required option(s) "%2$s" of %1$s are missing',
@@ -67,14 +69,14 @@ abstract class OptionsAwareRule extends Rule
                 implode('", "', array_keys($missingOptions))
             ));
         }
-
+        
         if ($isArray) {
             $this->options = $options;
         } elseif (!empty($defaultOption)) {
             $this->options[$defaultOption] = $options;
         }
     }
-
+    
     /**
      * Gets default option name
      *
@@ -84,7 +86,7 @@ abstract class OptionsAwareRule extends Rule
     {
         return null;
     }
-
+    
     /**
      * Gets known options names
      *
@@ -94,7 +96,7 @@ abstract class OptionsAwareRule extends Rule
     {
         return [];
     }
-
+    
     /**
      * Gets required options names
      *

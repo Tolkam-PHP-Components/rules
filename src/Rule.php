@@ -10,10 +10,10 @@ abstract class Rule implements RuleInterface
      * @param string $code
      * @param string $message
      *
-     * @return RuleFailureInterface
+     * @return FailureInterface
      */
     public function failure(string $code, string $message)
     {
-        return new RuleFailure($code, $message);
+        return new Failure($code, $message);
     }
 }

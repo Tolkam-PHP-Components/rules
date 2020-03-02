@@ -8,7 +8,7 @@ use RuntimeException;
  * @property string $code
  * @property string $text
  */
-class RuleFailure implements RuleFailureInterface
+class Failure implements FailureInterface
 {
     /**
      * Failure code

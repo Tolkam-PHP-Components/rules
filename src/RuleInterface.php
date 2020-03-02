@@ -9,7 +9,7 @@ interface RuleInterface
      *
      * @param mixed $value
      *
-     * @return RuleFailureInterface|RuleFailureInterface[]|null
+     * @return FailureInterface|FailureInterface[]|null
      */
     public function apply($value);
 }

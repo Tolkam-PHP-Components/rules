@@ -12,9 +12,9 @@ interface FlattenStrategyInterface
     /**
      * Applies the strategy
      *
-     * @param RuleFailuresInterface $source
+     * @param FailuresInterface $source
      *
-     * @return RuleFailuresInterface
+     * @return FailuresInterface
      */
-    public function apply(RuleFailuresInterface $source): RuleFailuresInterface;
+    public function apply(FailuresInterface $source): FailuresInterface;
 }

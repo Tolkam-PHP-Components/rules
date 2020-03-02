@@ -2,38 +2,38 @@
 
 namespace Tolkam\Rules\FlattenStrategy;
 
+use Tolkam\Rules\Failures;
+use Tolkam\Rules\FailuresInterface;
 use Tolkam\Rules\FlattenStrategyInterface;
-use Tolkam\Rules\RuleFailures;
-use Tolkam\Rules\RuleFailuresInterface;
 
 class DefaultFlattenStrategy implements FlattenStrategyInterface
 {
     /**
      * @inheritDoc
      */
-    public function apply(RuleFailuresInterface $source): RuleFailuresInterface
+    public function apply(FailuresInterface $source): FailuresInterface
     {
-        return $this->doFlatten($source, new RuleFailures());
+        return $this->doFlatten($source, new Failures());
     }
     
     /**
      * Flattens source to one-dimension
      *
-     * @param iterable              $source
-     * @param RuleFailuresInterface $target
-     * @param string|null           $startPath
+     * @param iterable          $source
+     * @param FailuresInterface $target
+     * @param string|null       $startPath
      *
-     * @return RuleFailuresInterface
+     * @return FailuresInterface
      */
     protected function doFlatten(
         iterable $source,
-        RuleFailuresInterface $target,
+        FailuresInterface $target,
         string $startPath = ''
-    ): RuleFailuresInterface {
+    ): FailuresInterface {
         foreach ($source as $k => $v) {
             $path = $startPath !== '' ? $startPath . self::DELIMITER . $k : $k;
             
-            if ($v instanceof RuleFailuresInterface) {
+            if ($v instanceof FailuresInterface) {
                 $target = $this->doFlatten($v, $target, $path);
             } else {
                 $target[$path] = $v;

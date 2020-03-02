@@ -2,8 +2,8 @@
 
 namespace Tolkam\Rules\Rule;
 
+use Tolkam\Rules\Failures;
 use Tolkam\Rules\Rule;
-use Tolkam\Rules\RuleFailures;
 use Tolkam\Rules\RuleInterface;
 
 /**
@@ -34,7 +34,7 @@ class ArrayOf extends Rule
             return $failure;
         }
         
-        $failures = new RuleFailures();
+        $failures = new Failures();
         
         foreach ($value as $k => $v) {
             if ($failure = $this->rule->apply($v)) {

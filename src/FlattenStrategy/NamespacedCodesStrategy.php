@@ -2,7 +2,8 @@
 
 namespace Tolkam\Rules\FlattenStrategy;
 
-use Tolkam\Rules\RuleFailuresInterface;
+use Tolkam\Rules\FailureInterface;
+use Tolkam\Rules\FailuresInterface;
 
 class NamespacedCodesStrategy extends DefaultFlattenStrategy
 {
@@ -11,18 +12,19 @@ class NamespacedCodesStrategy extends DefaultFlattenStrategy
      */
     protected function doFlatten(
         iterable $source,
-        RuleFailuresInterface $target,
+        FailuresInterface $target,
         string $startPath = ''
-    ): RuleFailuresInterface {
+    ): FailuresInterface {
         $delimiter = self::DELIMITER;
         
         foreach ($source as $k => $v) {
             $path = $startPath !== '' ? $startPath . $delimiter . $k : $k;
             
-            if ($v instanceof RuleFailuresInterface) {
+            if ($v instanceof FailuresInterface) {
                 $target = $this->doFlatten($v, $target, $path);
             } else {
-                $target[$path] = $v->setCode($path . $delimiter . $v->getCode());
+                /** @var FailureInterface $v */
+                $target[$path] = $v->withCode($path . $delimiter . $v->getCode());
             }
         }
         

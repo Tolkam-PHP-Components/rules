@@ -2,14 +2,14 @@
 
 namespace Tolkam\Rules;
 
-interface RuleFailureInterface
+interface FailureInterface
 {
     /**
      * Sets failure code
      *
      * @param string $code
      *
-     * @return RuleFailureInterface
+     * @return FailureInterface
      */
     public function withCode(string $code);
     
@@ -18,7 +18,7 @@ interface RuleFailureInterface
      *
      * @param string $text
      *
-     * @return RuleFailureInterface
+     * @return FailureInterface
      */
     public function withText(string $text);
     

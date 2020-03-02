@@ -5,14 +5,14 @@ namespace Tolkam\Rules;
 use RuntimeException;
 use Tolkam\Rules\FlattenStrategy\DefaultFlattenStrategy;
 
-class RuleFailures implements RuleFailuresInterface
+class Failures implements FailuresInterface
 {
     /**
      * items
      *
      * @var array
      */
-    protected $items = [];
+    protected array $items = [];
     
     /**
      * @param iterable $items
@@ -32,7 +32,7 @@ class RuleFailures implements RuleFailuresInterface
         $arr = [];
         
         foreach ($this->items as $k => $v) {
-            if ($v instanceof RuleFailuresInterface || $v instanceof RuleFailureInterface) {
+            if ($v instanceof FailuresInterface || $v instanceof FailureInterface) {
                 $arr[$k] = $v->toArray();
             } else {
                 $arr[$k] = $v;
@@ -45,7 +45,7 @@ class RuleFailures implements RuleFailuresInterface
     /**
      * @inheritDoc
      */
-    public function flatten(FlattenStrategyInterface $strategy = null): RuleFailuresInterface
+    public function flatten(FlattenStrategyInterface $strategy = null): FailuresInterface
     {
         if (!$strategy) {
             $strategy = new DefaultFlattenStrategy();
@@ -62,12 +62,12 @@ class RuleFailures implements RuleFailuresInterface
      */
     public function add($offset, $value)
     {
-        if (!($value instanceof RuleFailureInterface) && !($value instanceof RuleFailuresInterface)) {
+        if (!($value instanceof FailureInterface) && !($value instanceof FailuresInterface)) {
             throw new RuntimeException(sprintf(
                 'Value at offset "%1$s" must implement %2$s or %3$s, %4$s given',
                 $offset,
-                RuleFailureInterface::class,
-                RuleFailuresInterface::class,
+                FailureInterface::class,
+                FailuresInterface::class,
                 gettype($value)
             ));
         }

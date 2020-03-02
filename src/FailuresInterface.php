@@ -2,7 +2,11 @@
 
 namespace Tolkam\Rules;
 
-interface RuleFailuresInterface extends \ArrayAccess, \Countable, \Iterator
+use ArrayAccess;
+use Countable;
+use Iterator;
+
+interface FailuresInterface extends ArrayAccess, Countable, Iterator
 {
     /**
      * Flattens self to one-dimension
