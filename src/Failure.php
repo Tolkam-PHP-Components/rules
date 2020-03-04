@@ -20,9 +20,9 @@ class Failure implements FailureInterface
     /**
      * Failure text
      *
-     * @var string
+     * @var string|null
      */
-    protected string $text;
+    protected ?string $text;
     
     /**
      * @param string      $code
@@ -86,7 +86,7 @@ class Failure implements FailureInterface
     /**
      * @inheritDoc
      */
-    public function getText(): string
+    public function getText(): ?string
     {
         return $this->text;
     }

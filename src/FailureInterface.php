@@ -32,9 +32,9 @@ interface FailureInterface
     /**
      * Gets message
      *
-     * @return string
+     * @return string|null
      */
-    public function getText(): string;
+    public function getText(): ?string;
     
     /**
      * Gets array representation
