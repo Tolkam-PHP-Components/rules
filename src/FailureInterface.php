@@ -23,6 +23,15 @@ interface FailureInterface
     public function withText(string $text);
     
     /**
+     * Sets failure params
+     *
+     * @param array $params
+     *
+     * @return FailureInterface
+     */
+    public function withParams(array $params);
+    
+    /**
      * Gets code
      *
      * @return string
@@ -35,6 +44,13 @@ interface FailureInterface
      * @return string|null
      */
     public function getText(): ?string;
+    
+    /**
+     * Gets params
+     *
+     * @return array
+     */
+    public function getParams(): array;
     
     /**
      * Gets array representation

@@ -7,6 +7,7 @@ use RuntimeException;
 /**
  * @property string $code
  * @property string $text
+ * @property array  $params
  */
 class Failure implements FailureInterface
 {
@@ -25,10 +26,16 @@ class Failure implements FailureInterface
     protected ?string $text;
     
     /**
+     * @var array
+     */
+    protected array $params;
+    
+    /**
      * @param string      $code
      * @param string|null $text
+     * @param array       $params
      */
-    public function __construct(string $code, string $text = null)
+    public function __construct(string $code, string $text = null, array $params = [])
     {
         $allowed = 'a-zA-Z0-9:\.';
         if (preg_match('~[^' . $allowed . ']~', $code)) {
@@ -39,6 +46,7 @@ class Failure implements FailureInterface
         
         $this->code = $code;
         $this->text = $text;
+        $this->params = $params;
     }
     
     /**
@@ -64,6 +72,7 @@ class Failure implements FailureInterface
         return [
             'code' => $this->getCode(),
             'text' => $this->getText(),
+            'params' => $this->getParams(),
         ];
     }
     
@@ -94,6 +103,14 @@ class Failure implements FailureInterface
     /**
      * @inheritDoc
      */
+    public function getParams(): array
+    {
+        return $this->params;
+    }
+    
+    /**
+     * @inheritDoc
+     */
     public function withCode(string $code)
     {
         return new static($code, $this->getText());
@@ -105,5 +122,13 @@ class Failure implements FailureInterface
     public function withText(string $text)
     {
         return new static($this->getCode(), $text);
+    }
+    
+    /**
+     * @inheritDoc
+     */
+    public function withParams(array $params)
+    {
+        return new static($this->getCode(), $this->getText(), $params);
     }
 }

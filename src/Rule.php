@@ -9,11 +9,12 @@ abstract class Rule implements RuleInterface
      *
      * @param string $code
      * @param string $message
+     * @param array  $params
      *
      * @return FailureInterface
      */
-    public function failure(string $code, string $message)
+    public function failure(string $code, string $message, array $params = [])
     {
-        return new Failure($code, $message);
+        return new Failure($code, $message, $params);
     }
 }
