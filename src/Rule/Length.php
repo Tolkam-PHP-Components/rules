@@ -51,7 +51,7 @@ class Length extends OptionsAwareRule
         elseif ($hasMin && $hasMax) {
             if ($length < $min || $length > $max) {
                 $failure = [
-                    'invalidRange',
+                    'invalid.range',
                     sprintf('Length should be between %s and %s characters', $min, $max),
                     compact('min', 'max'),
                 ];
@@ -60,7 +60,7 @@ class Length extends OptionsAwareRule
         elseif ($hasMin) {
             if ($length < $min) {
                 $failure = [
-                    'tooShort',
+                    'invalid.short',
                     sprintf('Length should be %s characters or more', $min),
                     compact('min'),
                 ];
@@ -69,7 +69,7 @@ class Length extends OptionsAwareRule
         elseif ($hasMax) {
             if ($length > $max) {
                 $failure = [
-                    'tooLong',
+                    'invalid.long',
                     sprintf('Length should be %s characters or less', $max),
                     compact('max'),
                 ];
