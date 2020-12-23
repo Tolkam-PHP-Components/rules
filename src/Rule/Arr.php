@@ -61,10 +61,18 @@ class Arr extends Rule
     protected array $rules = [];
     
     /**
-     * @param RuleInterface[] $rules
+     * Allow only keys present in rules array
+     * @var bool
      */
-    public function __construct(array $rules)
+    protected bool $strict;
+    
+    /**
+     * @param RuleInterface[] $rules
+     * @param bool            $strict
+     */
+    public function __construct(array $rules, bool $strict = false)
     {
+        $this->strict = $strict;
         $this->extend($rules);
     }
     
@@ -89,7 +97,18 @@ class Arr extends Rule
      */
     public function apply($value)
     {
-        $failures = new Failures();
+        $failures = new Failures;
+        
+        if ($this->strict) {
+            $unknown = array_diff_key((array) $value, $this->rules);
+            if (!empty($unknown)) {
+                return $this->failure('unknown', sprintf(
+                    'Unknown key(s) "%s", known are "%s"',
+                    implode('", "', array_keys($unknown)),
+                    implode('", "', array_keys($this->rules)),
+                ));
+            }
+        }
         
         foreach ($this->rules as $k => $rule) {
             $v = is_array($value) ? ($value[$k] ?? null) : $value;
