@@ -33,13 +33,15 @@ class Type extends Rule
         
         if (function_exists($isFunction) && $isFunction($value)) {
             return null;
-        } elseif (function_exists($cTypeFunction) && $cTypeFunction($value)) {
+        }
+        elseif (function_exists($cTypeFunction) && $cTypeFunction($value)) {
             return null;
-        } elseif ($value instanceof $type) {
+        }
+        elseif ($value instanceof $type) {
             return null;
         }
         
-        return $this->failure('type.invalid', sprintf(
+        return $this->failure('invalid', sprintf(
             'Value should be of type %s, %s given',
             $type,
             gettype($value)
