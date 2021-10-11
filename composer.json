@@ -1,6 +1,6 @@
 {
     "name": "tolkam/rules",
-    "description": "Validates input data against predefined rules",
+    "description": "Tools for validating data against predefined rules",
     "type": "library",
     "license": "proprietary",
     "autoload": {
@@ -12,9 +12,7 @@
         "php": ">=7.4",
         "ext-mbstring": "*"
     },
-    "extra": {
-        "branch-alias": {
-            "dev-master": "1.0-dev"
-        }
+    "require-dev": {
+        "tolkam/dump": "^2.0"
     }
 }
